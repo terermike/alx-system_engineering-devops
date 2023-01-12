@@ -1,38 +1,25 @@
-# Install Nginx package
-package { 'nginx':
-  ensure => 'installed',
+# Script to install nginx using puppet
+
+package {'nginx':
+  ensure => 'present',
 }
 
-# Ensure Nginx service is running
-service { 'nginx':
-  ensure => 'running',
-  enable => true,
+exec {'install':
+  command  => 'sudo apt-get update ; sudo apt-get -y install nginx',
+  provider => shell,
+
 }
 
-# Create a default server block configuration
-file { '/etc/nginx/sites-available/default':
-  ensure => 'file',
-  content => '
-server {
-    listen 80;
-    root /var/www/html;
-    index index.html;
-
-    location = / {
-        return 200 "Hello World!";
-    }
-
-    location = /redirect_me {
-        return 301 http://www.example.com;
-    }
-
-    location / {
-        try_files $uri $uri/ =404;
-    }
-}
-',
+exec {'Hello':
+  command  => 'echo "Hello World!" | sudo tee /var/www/html/index.html',
+  provider => shell,
 }
 
-# Enable the default server block configuration
-nginx::site { 'default':
-  ensure => 'enabled',
+exec {'sudo sed -i "s/listen 80 default_server;/listen 80 default_server;\\n\\tlocation \/redirect_me {\\n\\t\\treturn 301 https:\/\/getterer.tech\/;\\n\\t}/" /etc/nginx/sites-available/default':
+  provider => shell,
+}
+
+exec {'run':
+  command  => 'sudo service nginx restart',
+  provider => shell,
+}
