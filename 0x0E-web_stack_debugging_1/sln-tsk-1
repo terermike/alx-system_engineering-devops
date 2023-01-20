@@ -1,0 +1,11 @@
+The command sed -i 's/8080/80/g' /etc/nginx/sites-enabled/default is used to replace the string "8080" with "80" in the /etc/nginx/sites-enabled/default file.
+
+sed is a command-line utility that is used to perform basic text transformations on an input stream (a file or input from a pipeline). The -i flag tells sed to edit the file in place, without making a backup copy. The s/8080/80/g part is the actual command, which tells sed to replace all occurrences of "8080" with "80" in the file.
+
+The command service nginx restart is used to restart the Nginx web server. This command sends the SIGHUP signal to the Nginx process, which causes it to reload its configuration file and restart.
+
+The command pkill -o nginx is used to kill the Nginx process. The pkill command sends a signal to one or more processes based on their name. The -o flag tells pkill to match only the oldest process.
+
+This command is typically used when you have multiple Nginx processes running, and you want to kill the oldest one. Be cautious while using this command as it will kill the oldest Nginx process running, so make sure that you are running the correct process before killing it.
+
+These commands are used together when you want to change the listening port of Nginx from 8080 to 80. The first command changes the port in the configuration file, the second command restarts the Nginx service so that the changes take effect and the last command kills the old Nginx process so that the new process starts.
