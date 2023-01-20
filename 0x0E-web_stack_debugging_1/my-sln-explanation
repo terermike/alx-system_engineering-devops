@@ -1,0 +1,9 @@
+The command sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default is used to create a symbolic link between the default Nginx server configuration file located in the /etc/nginx/sites-available/ directory and the /etc/nginx/sites-enabled/ directory.
+
+The ln command is used to create links between files. The -s flag tells the command to create a symbolic link, and the -f flag tells it to remove the destination file if it already exists.
+
+The /etc/nginx/sites-available/ directory is where Nginx stores its server configuration files, and the /etc/nginx/sites-enabled/ directory is where Nginx looks for its configuration files when it starts up. By creating a symbolic link between the default server configuration file and the sites-enabled directory, you are essentially telling Nginx to use that file as the default server configuration when it starts up.
+
+This command is typically used in Ubuntu-based systems as Ubuntu uses a different directory structure for Nginx configuration files as compared to other distributions.
+
+Please note that creating a symbolic link to the default configuration file does not guarantee that it will work as expected, it's always a good practice to test the configuration using nginx -t command to check the syntax and then reload the service using systemctl reload nginx or service nginx reload command before making the changes live.
